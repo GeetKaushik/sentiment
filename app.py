@@ -7,6 +7,9 @@ import numpy as np
 import logging
 from PIL import Image
 import nltk
+from langdetect import detect
+from googletrans import Translator
+import langcodes 
 nltk.download('vader_lexicon')
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -31,6 +34,27 @@ def allowed_file(filename):
 # Analyze Sentiment for Text
 
 
+translator = Translator()
+
+# Function to translate text to English
+
+
+def translate_to_english(text):
+  try:
+    translated = translator.translate(text, src='auto', dest='en')
+    return translated.text
+  except Exception as e:
+    print(f"Translation error: {str(e)}")
+    return text
+
+def get_full_language_name(language_code):
+    try:
+        language = langcodes.Language.make(language_code)
+        return language.display_name()  # Get the full language name
+    except Exception as e:
+        print(f"Error getting full language name: {str(e)}")
+        return language_code
+
 @app.route('/api/sentiment', methods=['POST'])
 def analyze_sentiment():
   from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -38,10 +62,16 @@ def analyze_sentiment():
   text = data.get('text')
   if text:
     try:
+      language_code = detect(text)
+      language = get_full_language_name(language_code)
       analyzer = SentimentIntensityAnalyzer()
       sentiment = analyzer.polarity_scores(text)
+      translated_text = translate_to_english(text)
       logging.debug(f"Text Sentiment Analysis: {sentiment}")
-      return jsonify({'sentiment': sentiment})
+      return jsonify({"language": language,
+                      "translatedText": translated_text,
+                      'sentiment': sentiment,
+                      })
     except Exception as e:
       logging.error(f"Error analyzing sentiment: {e}")
       return jsonify({"error": str(e)}), 500
