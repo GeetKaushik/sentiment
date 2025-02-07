@@ -1,75 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sentiment Analysis</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Optional: Add a favicon -->
-</head>
-<body>
-  <header>
-    <h1>Sentiment Analysis</h1>
-    <p>Analyze text, images, and videos to determine sentiment and translate content!</p>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Optional: Add a favicon -->
+  </head>
+  <body>
+    <header>
+      <h1>Sentiment Analysis</h1>
+      <p>
+        Analyze text, images, and videos to determine sentiment and translate
+        content!
+      </p>
+    </header>
 
-  <!-- Main Container -->
-  <main class="container">
+    <!-- Main Container -->
+    <main class="container">
+      <!-- Analyze Text Section -->
+      <section id="analyze-text-section" class="section">
+        <h2>Analyze Text</h2>
+        <textarea
+          id="text-input"
+          placeholder="Enter or paste text here for analysis"
+          aria-label="Text input for sentiment analysis"></textarea>
+        <button
+          id="translate-and-analyze-btn"
+          aria-label="Translate and Analyze Text">
+          Translate and Analyze
+        </button>
 
-    <!-- Analyze Text Section -->
-    <section id="analyze-text-section" class="section">
-      <h2>Analyze Text</h2>
-      <textarea id="text-input" placeholder="Enter or paste text here for analysis" aria-label="Text input for sentiment analysis"></textarea>
-      <button id="translate-and-analyze-btn" aria-label="Translate and Analyze Text">Translate and Analyze</button>
-      
-      <!-- Text Result Container (Visible after analysis) -->
-      <div id="text-result-container" class="result-container" style="display: none;">
-        <h3>Detected Language:</h3>
-        <p id="detected-language"></p>
-        <h3>Translated Text:</h3>
-        <p id="translated-text"></p>
-        <h3>Sentiment Analysis:</h3>
-        <p id="text-analysis-result"></p>
-      </div>
-    </section>
+        <!-- Text Result Container (Visible after analysis) -->
+        <div
+          id="text-result-container"
+          class="result-container"
+          style="display: none">
+          <h3>Detected Language:</h3>
+          <p id="detected-language"></p>
+          <h3>Translated Text:</h3>
+          <p id="translated-text"></p>
+          <h3>Sentiment Analysis:</h3>
+          <p id="text-analysis-result"></p>
+        </div>
+      </section>
 
-    <!-- Analyze Image Section -->
-    <section id="analyze-image-section" class="section">
-      <h2>Analyze Image</h2>
-      <input type="file" id="image-upload" accept="image/*" aria-label="Upload an image for sentiment analysis">
-      <button id="analyze-image-btn" aria-label="Analyze Image">Analyze Image</button>
+      <!-- Analyze Image Section -->
+      <section id="analyze-image-section" class="section">
+        <h2>Analyze Image</h2>
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          aria-label="Upload an image for sentiment analysis" />
+        <button id="analyze-image-btn" aria-label="Analyze Image">
+          Analyze Image
+        </button>
+
+        <!-- Image Result Container (Visible after analysis) -->
+        <div
+          id="image-result-container"
+          class="result-container"
+          style="display: none">
+          <h3>Image Analysis Result:</h3>
+          <p id="image-analysis-result"></p>
+        </div>
+
+        <!-- Loading Indicator (Visible while analyzing) -->
+      </section>
       
-      <!-- Image Result Container (Visible after analysis) -->
-      <div id="image-result-container" class="result-container" style="display: none;">
-        <h3>Image Analysis Result:</h3>
-        <p id="image-analysis-result"></p>
-      </div>
-      
-      <!-- Loading Indicator (Visible while analyzing) -->
-      <div id="loading-indicator" class="loading-indicator" style="display: none;">
+      <div
+        id="loading-indicator"
+        class="loading-indicator"
+        style="display: none">
         <p>Loading...</p>
       </div>
-    </section>
-
-    <!-- Analyze Video Section -->
-    <section id="analyze-video-section" class="section">
-      <h2>Analyze Video</h2>
-      <input type="file" id="video-upload" accept="video/*" aria-label="Upload a video for sentiment analysis">
-      <button id="analyze-video-btn" aria-label="Analyze Video">Analyze Video</button>
       
-      <!-- Video Result Container (Visible after analysis) -->
-      <div id="video-result-container" class="result-container" style="display: none;">
-        <h3>Video Analysis Result:</h3>
-        <p id="video-analysis-result"></p>
-      </div>
-    </section>
-  
-  </main>
+      <!-- Analyze Video Section -->
+      <section id="analyze-video-section" class="section">
+        <h2>Analyze Video</h2>
+        <input
+          type="file"
+          id="video-upload"
+          accept="video/*"
+          aria-label="Upload a video for sentiment analysis" />
+        <button id="analyze-video-btn" aria-label="Analyze Video">
+          Analyze Video
+        </button>
 
-  <footer>
-    <p>&copy; Powered by Sentiment Analysis App</p>
-  </footer>
+        <!-- Video Result Container (Visible after analysis) -->
+        <div
+          id="video-result-container"
+          class="result-container"
+          style="display: none">
+          <h3>Video Analysis Result:</h3>
+          <p id="video-analysis-result"></p>
+        </div>
+      </section>
+    </main>
 
-  <script src="script.js"></script>
-</body>
+    <footer>
+      <p>&copy; Powered by Sentiment Analysis App</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
