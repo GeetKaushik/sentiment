@@ -3,13 +3,12 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from deepface import DeepFace
 import cv2
-import numpy as np
 import logging
 from PIL import Image
 import nltk
-from langdetect import detect
+from langdetect import detect, DetectorFactory
 from googletrans import Translator
-import langcodes 
+import langcodes
 nltk.download('vader_lexicon')
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -34,9 +33,20 @@ def allowed_file(filename):
 # Analyze Sentiment for Text
 
 
-translator = Translator()
+# Function to detect language of text
+DetectorFactory.seed = 0  # Ensures consistent results
+
+
+def detect_language(text):
+  try:
+    lang = detect(text)
+    return lang
+  except:
+    return "en"  # Default to English if detection fails
+
 
 # Function to translate text to English
+translator = Translator()
 
 
 def translate_to_english(text):
@@ -47,37 +57,50 @@ def translate_to_english(text):
     print(f"Translation error: {str(e)}")
     return text
 
+
 def get_full_language_name(language_code):
-    try:
-        language = langcodes.Language.make(language_code)
-        return language.display_name()  # Get the full language name
-    except Exception as e:
-        print(f"Error getting full language name: {str(e)}")
-        return language_code
+  try:
+    language = langcodes.Language.make(language_code)
+    return language.display_name()  # Get the full language name
+  except Exception as e:
+    print(f"Error getting full language name: {str(e)}")
+    return language_code
+
 
 @app.route('/api/sentiment', methods=['POST'])
 def analyze_sentiment():
   from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
   data = request.get_json()
   text = data.get('text')
+
   if text:
     try:
-      language_code = detect(text)
-      language = get_full_language_name(language_code)
-      analyzer = SentimentIntensityAnalyzer()
-      sentiment = analyzer.polarity_scores(text)
+      detected_lang = detect_language(text)
+      language = get_full_language_name(detected_lang)
+
+      # Translate only if necessary
       translated_text = translate_to_english(text)
-      logging.debug(f"Text Sentiment Analysis: {sentiment}")
-      return jsonify({"language": language,
-                      "translatedText": translated_text,
-                      'sentiment': sentiment,
-                      })
+
+      analyzer = SentimentIntensityAnalyzer()
+      sentiment = analyzer.polarity_scores(translated_text)
+
+      logging.debug(f"Detected Language: {language}")
+      logging.debug(f"Translated Text: {translated_text}")
+      logging.debug(f"Sentiment Scores: {sentiment}")
+
+      return jsonify({
+          "language": language,
+          "translatedText": translated_text,
+          "sentiment": sentiment
+      })
+
     except Exception as e:
       logging.error(f"Error analyzing sentiment: {e}")
       return jsonify({"error": str(e)}), 500
+
   logging.warning("No text provided in request")
   return jsonify({'error': 'No text provided'}), 400
-
 # Analyze Facial Expression in Image
 
 
@@ -110,38 +133,6 @@ def analyze_image():
   return jsonify({'error': 'Invalid file type'}), 400
 
 # Analyze Facial Expressions in Video
-
-
-'''
-@app.route('/api/analyze-video', methods=['POST'])
-def analyze_video():
-  if 'file' not in request.files:
-    logging.warning("No file part in the request")
-    return jsonify({'error': 'No file part'}), 400
-
-  file = request.files['file']
-  if file.filename == '':
-    logging.warning("No file selected in the request")
-    return jsonify({'error': 'No selected file'}), 400
-
-  if file and allowed_file(file.filename):
-    filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filename)
-    logging.info(f"Video file saved at: {filename}")
-
-    try:
-      # Analyze video by processing frames
-      frames_analysis = analyze_video_with_model(filename)
-      logging.debug(f"Video Frame Expressions: {frames_analysis}")
-      return jsonify({'frames': frames_analysis, 'message': 'Video analyzed successfully'})
-    except Exception as e:
-      logging.error(f"Error during video analysis: {e}", exc_info=True)
-      return jsonify({'error': 'Video processing failed', 'details': str(e)}), 500
-
-  logging.warning("Invalid file type uploaded")
-  return jsonify({'error': 'Invalid file type'}), 400
-'''
-
 
 @app.route('/api/analyze-video', methods=['POST'])
 def analyze_video():

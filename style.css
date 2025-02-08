@@ -67,7 +67,7 @@ h2 {
 }
 
 textarea,
-input[type="file"] {
+input[type='file'] {
   width: 100%;
   padding: 8px;
   margin-bottom: 12px;
@@ -112,14 +112,6 @@ button:hover {
   line-height: 1.5; /* Improved readability */
 }
 
-/* Optional: Style for the loading indicator */
-.loading-indicator {
-  font-size: 1.1rem;
-  color: #888;
-  text-align: center;
-}
-
-
 /* Footer */
 footer {
   position: absolute;
@@ -136,6 +128,56 @@ footer p {
   margin-top: 10px;
 }
 
+/* Loader Container */
+.loading-indicator {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+  backdrop-filter: blur(5px); /* Slight blur effect */
+  justify-content: center; /* Horizontally center the spinner */
+  align-items: center; /* Vertically center the spinner */
+  z-index: 1000; /* Ensure it's on top */
+}
+
+/* Spinning Loader */
+.spinner {
+  display: flex;
+  width: 50px; /* Increased size for better visibility */
+  height: 50px;
+  border: 10px solid #3498db; /* Thicker border for better visibility */
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading Text */
+.loading-indicator p {
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Ensure the text is visible */
+  justify-content: center;
+  align-items: center;
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .container {
@@ -147,13 +189,3 @@ footer p {
     width: 90%; /* Make sections wider on smaller screens */
   }
 }
-
-
-
-
-
-
-
-
-
-  

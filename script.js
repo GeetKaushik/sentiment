@@ -51,7 +51,7 @@ document
     formData.append('file', fileInput.files[0])
 
     resultContainer.style.display = 'none'
-    loadingIndicator.style.display = 'block'
+    loadingIndicator.style.display = 'flex'
 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/analyze-image', {
@@ -64,7 +64,7 @@ document
       }
 
       const data = await response.json()
-      loadingIndicator.style.display = 'none'
+      loadingIndicator.style.display = 'flex'
       //   resultText.textContent = 'Emotion detected: ' + data.emotion
       resultText.textContent = 'Emotion detected: ' + data.expression
       resultContainer.style.display = 'block'
@@ -119,12 +119,12 @@ document
     }
 
     document.getElementById('video-result-container').style.display = 'none'
-    document.getElementById('loading-indicator').style.display = 'block'
+    document.getElementById('loading-indicator').style.display = 'flex'
 
     console.log('Sending video for analysis...')
     const analysisResult = await analyzeVideo(videoInput)
 
-    document.getElementById('loading-indicator').style.display = 'none'
+    document.getElementById('loading-indicator').style.display = 'flex'
     document.getElementById('video-result-container').style.display = 'block'
 
     if (analysisResult) {
@@ -270,3 +270,21 @@ async function analyzeVideo(video) {
     return null
   }
 }
+
+// // Function to show the loader
+// function showLoadingIndicator() {
+//   document.getElementById('loading-indicator').style.display = 'flex'
+// }
+
+// // Function to hide the loader
+// function hideLoadingIndicator() {
+//   document.getElementById('loading-indicator').style.display = 'none'
+// }
+
+// // Example: Simulate a process that shows the loader
+// function simulateLoadingProcess() {
+//   showLoadingIndicator() // Show loader
+//   setTimeout(() => {
+//     hideLoadingIndicator() // Hide loader after 3 seconds
+//   }, 3000) // Replace with your actual loading time or process
+// }
