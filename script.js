@@ -64,7 +64,7 @@ document
       }
 
       const data = await response.json()
-      loadingIndicator.style.display = 'flex'
+      loadingIndicator.style.display = 'none'
       //   resultText.textContent = 'Emotion detected: ' + data.emotion
       resultText.textContent = 'Emotion detected: ' + data.expression
       resultContainer.style.display = 'block'
@@ -124,7 +124,7 @@ document
     console.log('Sending video for analysis...')
     const analysisResult = await analyzeVideo(videoInput)
 
-    document.getElementById('loading-indicator').style.display = 'flex'
+    document.getElementById('loading-indicator').style.display = 'none'
     document.getElementById('video-result-container').style.display = 'block'
 
     if (analysisResult) {
