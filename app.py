@@ -21,7 +21,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Set up file upload folder
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = '/tmp/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = {
     'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov'}
