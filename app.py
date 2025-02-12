@@ -21,7 +21,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Set up file upload folder
-UPLOAD_FOLDER = '/uploads'
+UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = {
     'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov'}
@@ -249,5 +249,5 @@ def analyze_video_with_model(video_path):
   return frames_expressions  # Return expressions for selected frames
 
 
-# if __name__ == '__main__':
-#   app.run(debug=False, port=8000)
+if __name__ == '__main__':
+  app.run(debug=False, port=8000)
