@@ -1,17 +1,21 @@
 import os
+import logging
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from deepface import DeepFace
 import cv2
-import logging
 from PIL import Image
 import nltk
 from langdetect import detect, DetectorFactory
 from googletrans import Translator
 import langcodes
+
+# Download necessary NLTK data
 nltk.download('vader_lexicon')
+
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
 CORS(app)
@@ -26,11 +30,11 @@ app.config['ALLOWED_EXTENSIONS'] = {
 if not os.path.exists(UPLOAD_FOLDER):
   os.makedirs(UPLOAD_FOLDER)
 
+# Helper function to check allowed file extensions
+
 
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
-
-# Analyze Sentiment for Text
 
 
 # Function to detect language of text
@@ -41,7 +45,8 @@ def detect_language(text):
   try:
     lang = detect(text)
     return lang
-  except:
+  except Exception as e:
+    logging.error(f"Language detection error: {str(e)}")
     return "en"  # Default to English if detection fails
 
 
@@ -54,8 +59,10 @@ def translate_to_english(text):
     translated = translator.translate(text, src='auto', dest='en')
     return translated.text
   except Exception as e:
-    print(f"Translation error: {str(e)}")
+    logging.error(f"Translation error: {str(e)}")
     return text
+
+# Function to get full language name
 
 
 def get_full_language_name(language_code):
@@ -63,8 +70,10 @@ def get_full_language_name(language_code):
     language = langcodes.Language.make(language_code)
     return language.display_name()  # Get the full language name
   except Exception as e:
-    print(f"Error getting full language name: {str(e)}")
+    logging.error(f"Error getting full language name: {str(e)}")
     return language_code
+
+# Route to analyze sentiment for text
 
 
 @app.route('/api/sentiment', methods=['POST'])
@@ -101,7 +110,8 @@ def analyze_sentiment():
 
   logging.warning("No text provided in request")
   return jsonify({'error': 'No text provided'}), 400
-# Analyze Facial Expression in Image
+
+# Route to analyze facial expression in image
 
 
 @app.route('/api/analyze-image', methods=['POST'])
@@ -133,6 +143,7 @@ def analyze_image():
   return jsonify({'error': 'Invalid file type'}), 400
 
 # Analyze Facial Expressions in Video
+
 
 @app.route('/api/analyze-video', methods=['POST'])
 def analyze_video():
@@ -238,5 +249,5 @@ def analyze_video_with_model(video_path):
   return frames_expressions  # Return expressions for selected frames
 
 
-if __name__ == '__main__':
-  app.run(debug=False, port=8000)
+# if __name__ == '__main__':
+#   app.run(debug=False, port=8000)
