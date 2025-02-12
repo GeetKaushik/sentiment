@@ -54,7 +54,7 @@ document
     loadingIndicator.style.display = 'flex'
 
     try {
-      const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
+      const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
         method: 'POST',
         body: formData,
       })
@@ -74,39 +74,6 @@ document
       console.error('Error:', error)
     }
   })
-
-// Event listener for analyzing the video upload
-/*
-document
-  .getElementById('analyze-video-btn')
-  .addEventListener('click', async () => {
-    const videoInput = document.getElementById('video-upload').files[0]
-
-    if (!videoInput) {
-      alert('Please upload a video for analysis.')
-      return
-    }
-
-    document.getElementById('video-result-container').style.display = 'none'
-    document.getElementById('loading-indicator').style.display = 'block'
-
-    console.log('Sending video for analysis...')
-    const analysisResult = await analyzeVideo(videoInput)
-
-    document.getElementById('loading-indicator').style.display = 'none'
-    document.getElementById('video-result-container').style.display = 'block'
-
-    if (analysisResult) {
-      console.log('Received video analysis result:', analysisResult)
-      document.getElementById(
-        'video-analysis-result'
-      ).innerText = `Analysis: ${analysisResult.frames}`
-    } else {
-      console.error('Error analyzing video.')
-      alert('There was an issue analyzing the video. Please try again.')
-    }
-  })
-  */
 
 document
   .getElementById('analyze-video-btn')
@@ -155,7 +122,7 @@ document
     let formData = new FormData()
     formData.append('file', file)
 
-    fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
+    fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
       method: 'POST',
       body: formData,
       headers: {
@@ -184,7 +151,7 @@ document
 async function analyzeText(text) {
   console.log('Making API request for sentiment analysis...')
   try {
-    const response = await fetch('https://sentiment-vr9q.onrender.com/api/sentiment', {
+    const response = await fetch('https://sentiment-sere.onrender.com/api/sentiment', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -221,7 +188,7 @@ async function analyzeImage(image) {
   formData.append('file', image)
 
   try {
-    const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
+    const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
       method: 'POST',
       body: formData,
     })
@@ -248,7 +215,7 @@ async function analyzeVideo(video) {
   formData.append('file', video)
 
   try {
-    const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-video', {
+    const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-video', {
       method: 'POST',
       body: formData,
     })
