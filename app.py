@@ -18,10 +18,10 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 # Set up file upload folder
-UPLOAD_FOLDER = '/tmp/uploads'
+UPLOAD_FOLDER = '/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = {
     'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov'}
