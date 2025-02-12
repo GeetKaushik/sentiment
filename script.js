@@ -54,7 +54,7 @@ document
     loadingIndicator.style.display = 'flex'
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/analyze-image', {
+      const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
         method: 'POST',
         body: formData,
       })
@@ -155,7 +155,7 @@ document
     let formData = new FormData()
     formData.append('file', file)
 
-    fetch('http://127.0.0.1:8000/api/analyze-image', {
+    fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
       method: 'POST',
       body: formData,
       headers: {
@@ -184,7 +184,7 @@ document
 async function analyzeText(text) {
   console.log('Making API request for sentiment analysis...')
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/sentiment', {
+    const response = await fetch('https://sentiment-vr9q.onrender.com/api/sentiment', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -221,7 +221,7 @@ async function analyzeImage(image) {
   formData.append('file', image)
 
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/analyze-image', {
+    const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-image', {
       method: 'POST',
       body: formData,
     })
@@ -248,7 +248,7 @@ async function analyzeVideo(video) {
   formData.append('file', video)
 
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/analyze-video', {
+    const response = await fetch('https://sentiment-vr9q.onrender.com/api/analyze-video', {
       method: 'POST',
       body: formData,
     })
