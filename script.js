@@ -54,7 +54,8 @@ document
     loadingIndicator.style.display = 'flex'
 
     try {
-      const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
+      // const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', {  //Deployment
+      const response = await fetch('http://127.0.0.1:8000/api/analyze-image', { //Local
         method: 'POST',
         body: formData,
       })
@@ -122,7 +123,8 @@ document
     let formData = new FormData()
     formData.append('file', file)
 
-    fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
+    // fetch('https://sentiment-sere.onrender.com/api/analyze-image', { //Deployment
+    fetch('http://127.0.0.1:8000/api/analyze-image', { //Local
       method: 'POST',
       body: formData,
       headers: {
@@ -151,7 +153,8 @@ document
 async function analyzeText(text) {
   console.log('Making API request for sentiment analysis...')
   try {
-    const response = await fetch('https://sentiment-sere.onrender.com/api/sentiment', {
+    // const response = await fetch('https://sentiment-sere.onrender.com/api/sentiment', { //Deployment
+    const response = await fetch('http://127.0.0.1:8000/api/sentiment', { //Local
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -188,7 +191,8 @@ async function analyzeImage(image) {
   formData.append('file', image)
 
   try {
-    const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', {
+    // const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-image', { //Deployment
+    const response = await fetch('http://127.0.0.1:8000/api/analyze-image', { //Local
       method: 'POST',
       body: formData,
     })
@@ -215,7 +219,8 @@ async function analyzeVideo(video) {
   formData.append('file', video)
 
   try {
-    const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-video', {
+    // const response = await fetch('https://sentiment-sere.onrender.com/api/analyze-video', {  //Deployment
+    const response = await fetch('http://127.0.0.1:8000/api/analyze-video', { //Local
       method: 'POST',
       body: formData,
     })
